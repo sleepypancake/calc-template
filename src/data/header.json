@@ -1,0 +1,28 @@
+{
+  "nav": [
+    {
+      "title": "Главная",
+      "blockId": "main-slider"
+    },
+    {
+      "title": "Курсы",
+      "blockId": "courses"
+    },
+    {
+      "title": "О нас",
+      "blockId": "about"
+    },
+    {
+      "title": "Вопрос ответ",
+      "blockId": "questions"
+    },
+    {
+      "title": "Отзывы",
+      "blockId": "reviews"
+    },
+    {
+      "title": "Контакты",
+      "blockId": "contacts"
+    }
+  ]
+}

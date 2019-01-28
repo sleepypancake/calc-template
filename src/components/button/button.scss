@@ -1,0 +1,18 @@
+.button {
+  $self: &;
+  transition: all 0.125s linear;
+  cursor: pointer;
+  @include from-sm() {
+    padding: 8px 19px 6px;
+  }
+  @include to-sm() {
+    padding: 6px 15px 5px;
+  }
+  &#{$self}_transparent {
+    border: solid 2px $brand-yellow;
+    color: $black-two;
+    &:hover {
+      background-color: $brand-yellow;
+    }
+  }
+}

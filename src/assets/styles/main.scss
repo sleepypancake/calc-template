@@ -1,0 +1,48 @@
+@import "./helpers/gui";
+@import "./helpers/fonts";
+@import "./helpers/grid";
+@import "~normalize-scss/sass/normalize";
+// Blocks styles
+@import "../../blocks/**/*.scss";
+// Components styles
+@import "../../components/**/*.scss";
+
+*, *::before, *:after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  outline: none;
+}
+
+::-ms-clear {
+  display: none;
+}
+
+body {
+  font-family: 'GothamPro', sans-serif;
+  font-weight: 500;
+  letter-spacing: 0.2px;
+  font-size: 18px;
+  color: $main-text-color;
+  -webkit-font-smoothing: antialiased;
+  @include to-sm() {
+    font-size: 15px;
+  }
+  &.fixed {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    overflow: hidden;
+  }
+}
+
+ul {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+}
+
