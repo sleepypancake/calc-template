@@ -7,21 +7,66 @@ const SpriteLoaderPlugin = require('svg-sprite-loader/plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const autoprefixer = require('autoprefixer');
 const ImageminPlugin = require('imagemin-webpack-plugin').default;
+const ServiceWorkerWebpackPlugin = require( 'serviceworker-webpack-plugin');
+
+
+let plugins = [];
+let page;
+fs.readdirSync('./src/').forEach(file => {
+  if(String(file).endsWith('.pug')){
+    page = new HtmlWebPackPlugin({
+      template: `./src/${path.basename(file, '.pug')}.pug`,
+      filename: `./${path.basename(file, '.pug')}.html`,
+      minify: true,
+      hash: true
+    });
+    plugins.push(page)
+  }
+});
+plugins.push(new MiniCssExtractPlugin({
+  filename: "[name].css",
+  chunkFilename: "[id].css"
+}));
+plugins.push(new SpriteLoaderPlugin());
+plugins.push(new SpriteLoaderPlugin(new CopyWebpackPlugin([
+  {from: 'src/public', to: './'}
+])));
+plugins.push(new ImageminPlugin({
+  pngquant: {
+    quality: '95-100'
+  }
+}));
+
+plugins.push( new ServiceWorkerWebpackPlugin({
+  entry: path.join(__dirname, 'src/sw/service-worker.js'),
+}),);
+
+
+
 
 module.exports = {
   devServer: {
-    host: '0.0.0.0',
+    host: 'localhost',
+    port: '9900',
     disableHostCheck: true,
-    open: false
+    open: false,
+    watchContentBase: true
   },
   module: {
     rules: [
       {
         test: /\.js$/,
-        exclude: /node_modules/,
+        exclude: [/node_modules/],
         use: {
           loader: "babel-loader"
         }
+      },
+      {
+        test: /\.tsx?$/,
+        use: {
+          loader: "ts-loader"
+        },
+        exclude: [/node_modules/]
       },
       {
         test: /\.pug$/,
@@ -36,7 +81,7 @@ module.exports = {
             loader: 'pug-html-loader',
             query: {
               data: {
-                header: require('./src/data/header.json'),
+                // header: require('./src/data/header.json'),
               },
               pretty: true
             }
@@ -117,27 +162,10 @@ module.exports = {
       }
     ]
   },
-  plugins: [
-    new HtmlWebPackPlugin({
-      template: "./src/index.pug",
-      filename: "./index.html",
-      minify: true,
-      hash: true
-    }),
-    new MiniCssExtractPlugin({
-      filename: "[name].css",
-      chunkFilename: "[id].css"
-    }),
-    new SpriteLoaderPlugin(),
-    new CopyWebpackPlugin([
-      {from: 'src/public', to: './'}
-    ]),
-    new ImageminPlugin({
-      pngquant: {
-        quality: '95-100'
-      }
-    })
-  ]
+  resolve: {
+    extensions: [ '.tsx', '.ts', '.js' ]
+  },
+  plugins: plugins
 };
 
 
