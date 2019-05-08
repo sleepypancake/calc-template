@@ -13,7 +13,7 @@ const ServiceWorkerWebpackPlugin = require( 'serviceworker-webpack-plugin');
 let plugins = [];
 let page;
 let links = [];
-links.push('<ul>');
+
 fs.readdirSync('./src/').forEach(file => {
   if(String(file).endsWith('.pug')){
     page = new HtmlWebPackPlugin({
@@ -22,18 +22,20 @@ fs.readdirSync('./src/').forEach(file => {
       minify: true,
       hash: true
     });
-    links.push(`<li><a href="${path.basename(file, '.pug')}.html">${path.basename(file, '.pug')}.html</a></li>`);
+    links.push({
+      link: `./${path.basename(file, '.pug')}.html`,
+      title: path.basename(file, '.pug')
+    });
     plugins.push(page)
   }
 });
-links.push('</ul>');
+
 plugins.push(
     new HtmlWebPackPlugin({
-      template: `./src/${path.basename('list.html', '.html')}.html`,
-      filename: `./${path.basename('list.html', '.html')}.html`,
+      template: `./src/list-template/${path.basename('list.pug', '.pug')}.pug`,
+      filename: `${path.basename('list.pug', '.pug')}.html`,
       minify: true,
       hash: true,
-      links: links.join('')
     })
 );
 plugins.push(new MiniCssExtractPlugin({
@@ -63,7 +65,12 @@ module.exports = {
     port: '9900',
     disableHostCheck: true,
     open: false,
-    watchContentBase: true
+    openPage: 'list.html'
+  },
+  watch: true,
+  watchOptions: {
+    poll: 1000,
+    ignored: /node_modules/
   },
   module: {
     rules: [
@@ -95,6 +102,7 @@ module.exports = {
             query: {
               data: {
                 // header: require('./src/data/header.json'),
+                linkslist: links
               },
               pretty: true
             }
