@@ -12,6 +12,8 @@ const ServiceWorkerWebpackPlugin = require( 'serviceworker-webpack-plugin');
 
 let plugins = [];
 let page;
+let links = [];
+links.push('<ul>');
 fs.readdirSync('./src/').forEach(file => {
   if(String(file).endsWith('.pug')){
     page = new HtmlWebPackPlugin({
@@ -20,9 +22,20 @@ fs.readdirSync('./src/').forEach(file => {
       minify: true,
       hash: true
     });
+    links.push(`<li><a href="${path.basename(file, '.pug')}.html">${path.basename(file, '.pug')}.html</a></li>`);
     plugins.push(page)
   }
 });
+links.push('</ul>');
+plugins.push(
+    new HtmlWebPackPlugin({
+      template: `./src/${path.basename('list.html', '.html')}.html`,
+      filename: `./${path.basename('list.html', '.html')}.html`,
+      minify: true,
+      hash: true,
+      links: links.join('')
+    })
+);
 plugins.push(new MiniCssExtractPlugin({
   filename: "[name].css",
   chunkFilename: "[id].css"
