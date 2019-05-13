@@ -101,8 +101,8 @@ module.exports = {
             loader: 'pug-html-loader',
             query: {
               data: {
-                // header: require('./src/data/header.json'),
-                linkslist: links
+                linkslist: links,
+                header: require('./src/data/header.json'),
               },
               pretty: true
             }

@@ -17,6 +17,3 @@ import style from "./assets/styles/main.scss";
 
 //*****************************************************************
 
-
-require('./app');
-
