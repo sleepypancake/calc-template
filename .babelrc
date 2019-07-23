@@ -1,5 +1,18 @@
 {
-    "presets": [
-        "env"
+  "presets": [
+    [
+      "@babel/preset-env",
+      {
+        "modules": "commonjs",
+        "targets": {
+          "browsers": [
+            "last 2 versions"
+          ],
+          "node": "current"
+        },
+        "useBuiltIns": "entry",
+        "debug": false
+      }
     ]
+  ]
 }

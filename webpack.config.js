@@ -31,12 +31,12 @@ fs.readdirSync('./src/').forEach(file => {
 });
 
 plugins.push(
-    new HtmlWebPackPlugin({
-      template: `./src/list-template/${path.basename('list.pug', '.pug')}.pug`,
-      filename: `${path.basename('list.pug', '.pug')}.html`,
-      minify: true,
-      hash: true,
-    })
+  new HtmlWebPackPlugin({
+    template: `./src/list-template/${path.basename('list.pug', '.pug')}.pug`,
+    filename: `${path.basename('list.pug', '.pug')}.html`,
+    minify: true,
+    hash: true,
+  })
 );
 plugins.push(new MiniCssExtractPlugin({
   filename: "[name].css",
@@ -61,32 +61,25 @@ plugins.push( new ServiceWorkerWebpackPlugin({
 
 module.exports = {
   devServer: {
-    host: 'localhost',
-    port: '9900',
+    host: '0.0.0.0',
+    port: '8080',
     disableHostCheck: true,
     open: false,
     openPage: 'list.html'
   },
-  watch: true,
-  watchOptions: {
-    poll: 1000,
-    ignored: /node_modules/
-  },
+  // watch: true,
+  // watchOptions: {
+  //   poll: 1000,
+  //   ignored: /node_modules/
+  // },
   module: {
     rules: [
       {
         test: /\.js$/,
         exclude: [/node_modules/],
         use: {
-          loader: "babel-loader"
+          loader: "babel-loader",
         }
-      },
-      {
-        test: /\.tsx?$/,
-        use: {
-          loader: "ts-loader"
-        },
-        exclude: [/node_modules/]
       },
       {
         test: /\.pug$/,
@@ -116,8 +109,8 @@ module.exports = {
           {
             loader: 'css-loader',
             options: {
-              sourceMap: true,
-              minimize: true
+              // sourceMap: true,
+              // minimize: true
             }
           },
           {
@@ -184,7 +177,7 @@ module.exports = {
     ]
   },
   resolve: {
-    extensions: [ '.tsx', '.ts', '.js' ]
+    extensions: [ '.js' ]
   },
   plugins: plugins
 };
