@@ -10,3 +10,17 @@
     font-stretch: normal;
   }
 }
+
+@include webFont('Geometria', 'Geometria', 400);
+@include webFont('Geometria', 'Geometria-Light', 300);
+@include webFont('Geometria', 'Geometria-Medium', 500);
+@include webFont('Geometria', 'Geometria-Bold', 600);
+
+@include webFont('SuisseIntI', 'SuisseIntl-UltraLight', 100);
+@include webFont('SuisseIntI', 'SuisseIntl-Thin', 200);
+@include webFont('SuisseIntI', 'SuisseIntl-Light', 300);
+@include webFont('SuisseIntI', 'SuisseIntl-Regular', 400);
+@include webFont('SuisseIntI', 'SuisseIntl-Book', 500);
+@include webFont('SuisseIntI', 'SuisseIntl-Medium', 600);
+@include webFont('SuisseIntI', 'SuisseIntl-SemiBold', 700);
+@include webFont('SuisseIntI', 'SuisseIntl-Black', 800);
