@@ -38,8 +38,8 @@ fs.readdirSync('./src/').forEach(file => {
 
 plugins.push(
   new HtmlWebPackPlugin({
-    template: `./src/list-template/${path.basename('list.pug', '.pug')}.pug`,
-    filename: `${path.basename('list.pug', '.pug')}.html`,
+    template: `./src/${path.basename('index.pug', '.pug')}.pug`,
+    filename: `${path.basename('index.pug', '.pug')}.html`,
     minify: true,
     hash: true,
   })
@@ -64,7 +64,7 @@ const prodConfig = {
     disableHostCheck: true,
     open: false,
     hot: true,
-    openPage: 'list.html'
+    openPage: 'index.html'
   },
   module: {
     rules: [
@@ -220,11 +220,11 @@ const prodConfig = {
 const devConfig =  {
   devServer: {
     host: '0.0.0.0',
-    port: '8080',
+    port: '8083',
     disableHostCheck: true,
     open: false,
     hot: true,
-    openPage: 'list.html'
+    openPage: 'index.html'
   },
   module: {
     rules: [
